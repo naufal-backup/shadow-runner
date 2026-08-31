@@ -485,16 +485,20 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     // flipped isAttacking to false before the clip actually finished.
     if (!this.isAttacking && !this.isDownSmashing && !this.isAttackAnimPlaying()) {
       if (this.isWallSliding) {
+        this.setDisplaySize(144, 144);
         this.anims.play('player_wall_grab', true);
       } else if (!onFloor) {
+        this.setDisplaySize(96, 96);
         if (arcadeBody.velocity.y < 0) {
           this.anims.play('player_jump', true);
-        } else {
+        } else if (this.anims.currentAnim?.key !== 'player_jump' || this.anims.getProgress() >= 1) {
           this.anims.play('player_fall', true);
         }
       } else if (arcadeBody.velocity.x !== 0) {
+        this.setDisplaySize(96, 96);
         this.anims.play('player_run', true);
       } else {
+        this.setDisplaySize(96, 96);
         this.anims.play('player_idle', true);
       }
     }
