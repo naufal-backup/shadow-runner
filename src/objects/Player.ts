@@ -7,7 +7,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   private maxHp: number = PLAYER_CONFIG.maxHp;
 
   // Equipment stats
-  private equippedWeapon: ItemDef = ITEM_DATABASE['sword_iron'];
+  private equippedWeapon: ItemDef = ITEM_DATABASE['fist_bare'];
   private equippedArmor: ItemDef | null = null;
 
   // Traversal & Jump Mechanics
@@ -119,27 +119,27 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       frameRate: 1
     });
 
-    // Attack combo 1: full 6 frames (0, 1, 2, 3, 4, 5) at 16fps = 375ms
+    // Attack combo 1: empty hand punch strike (frames 0..5) at 24fps = 250ms
     anims.create({
       key: 'player_atk_1',
       frames: anims.generateFrameNumbers('player_attack', { start: 0, end: 5 }),
-      frameRate: 16,
+      frameRate: 24,
       repeat: 0
     });
 
-    // Attack combo 2: full 6 frames (0, 1, 2, 3, 4, 5) at 18fps = 333ms
+    // Attack combo 2: second punch combination (frames 0..5) at 26fps = 230ms
     anims.create({
       key: 'player_atk_2',
       frames: anims.generateFrameNumbers('player_attack', { start: 0, end: 5 }),
-      frameRate: 18,
+      frameRate: 26,
       repeat: 0
     });
 
-    // Attack combo 3: full 6 frames (0, 1, 2, 3, 4, 5) at 20fps = 300ms
+    // Attack combo 3: heavy martial finisher (frames 0..5) at 28fps = 214ms
     anims.create({
       key: 'player_atk_3',
       frames: anims.generateFrameNumbers('player_attack', { start: 0, end: 5 }),
-      frameRate: 20,
+      frameRate: 28,
       repeat: 0
     });
 

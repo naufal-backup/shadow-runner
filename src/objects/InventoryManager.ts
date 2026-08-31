@@ -14,15 +14,14 @@ export class InventoryManager {
   private equipment: EquipmentState;
 
   constructor() {
-    // Default starter gear
+    // Default starter gear: Bare Hands (no equipped weapon)
     this.equipment = {
-      weapon: ITEM_DATABASE['sword_iron'],
+      weapon: ITEM_DATABASE['fist_bare'],
       armor: null
     };
 
     // Starter items
     this.addItem(ITEM_DATABASE['potion_hp'], 2);
-    this.addItem(ITEM_DATABASE['bow_hunter'], 1);
   }
 
   public getSlots(): InventorySlot[] {

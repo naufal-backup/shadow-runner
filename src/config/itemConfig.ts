@@ -46,6 +46,17 @@ export interface SaveData {
 }
 
 export const ITEM_DATABASE: Record<string, ItemDef> = {
+  fist_bare: {
+    id: 'fist_bare',
+    name: 'Bare Hands',
+    type: 'weapon',
+    description: 'Empty-hand melee strikes with fast multi-hit martial punch combos.',
+    textureKey: 'icon_fist_bare',
+    price: 0,
+    attackMode: 'melee',
+    damageBonus: 0,
+    attackCooldownMs: 150
+  },
   sword_iron: {
     id: 'sword_iron',
     name: 'Iron Broadsword',

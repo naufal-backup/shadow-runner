@@ -357,6 +357,20 @@ export function createGameTextures(scene: Phaser.Scene): void {
 
   // --- ITEM & EQUIPMENT ICONS (24x24) ---
 
+  // 0. Bare Hands Icon (24x24)
+  const fistCanvas = document.createElement('canvas');
+  fistCanvas.width = 24;
+  fistCanvas.height = 24;
+  const fCtx = fistCanvas.getContext('2d')!;
+  fCtx.fillStyle = '#f59e0b';
+  fCtx.fillRect(6, 8, 12, 10);
+  fCtx.fillStyle = '#d97706';
+  fCtx.fillRect(4, 11, 4, 6);
+  fCtx.fillStyle = '#b45309';
+  fCtx.fillRect(8, 6, 8, 4);
+  if (scene.textures.exists('icon_fist_bare')) scene.textures.remove('icon_fist_bare');
+  scene.textures.addCanvas('icon_fist_bare', fistCanvas);
+
   // 1. Iron Sword
   const isCanvas = document.createElement('canvas');
   isCanvas.width = 24;
