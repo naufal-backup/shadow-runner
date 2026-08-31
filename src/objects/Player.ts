@@ -119,27 +119,27 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       frameRate: 1
     });
 
-    // Attack combo 1: 5 frames at 28fps = 178ms
+    // Attack combo 1: quick jab (frames 0, 2, 4) — 3 frames at 24fps = 125ms
     anims.create({
       key: 'player_atk_1',
-      frames: anims.generateFrameNumbers('player_attack', { start: 0, end: 4 }),
-      frameRate: 28,
+      frames: anims.generateFrameNumbers('player_attack', { frames: [0, 2, 4] }),
+      frameRate: 24,
       repeat: 0
     });
 
-    // Attack combo 2: 5 frames at 30fps = 167ms
+    // Attack combo 2: wide sweep (frames 1, 3, 4) — 3 frames at 26fps = 115ms
     anims.create({
       key: 'player_atk_2',
-      frames: anims.generateFrameNumbers('player_attack', { start: 0, end: 4 }),
-      frameRate: 30,
+      frames: anims.generateFrameNumbers('player_attack', { frames: [1, 3, 4] }),
+      frameRate: 26,
       repeat: 0
     });
 
-    // Attack combo 3: 5 frames at 34fps = 147ms
+    // Attack combo 3: heavy cut (frames 0, 3, 4) — 3 frames at 28fps = 107ms
     anims.create({
       key: 'player_atk_3',
-      frames: anims.generateFrameNumbers('player_attack', { start: 0, end: 4 }),
-      frameRate: 34,
+      frames: anims.generateFrameNumbers('player_attack', { frames: [0, 3, 4] }),
+      frameRate: 28,
       repeat: 0
     });
 
