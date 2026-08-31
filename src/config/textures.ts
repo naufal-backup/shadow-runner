@@ -18,25 +18,25 @@ export function createGameTextures(scene: Phaser.Scene): void {
 
   // Only load if not already loaded
   if (!scene.textures.exists('player_idle')) {
-    scene.load.spritesheet('player_idle', 'assets/mc-idle-trimmed.png', {
+    scene.load.spritesheet('player_idle', 'assets/player/mc-idle-trimmed.png', {
       frameWidth: playerFrameSize,
       frameHeight: playerFrameSize
     });
   }
   if (!scene.textures.exists('player_run')) {
-    scene.load.spritesheet('player_run', 'assets/mc-run-trimmed.png', {
+    scene.load.spritesheet('player_run', 'assets/player/mc-run-trimmed.png', {
       frameWidth: playerFrameSize,
       frameHeight: playerFrameSize
     });
   }
   if (!scene.textures.exists('player_attack')) {
-    scene.load.spritesheet('player_attack', 'assets/mc-attack.png', {
+    scene.load.spritesheet('player_attack', 'assets/player/mc-attack.png', {
       frameWidth: playerFrameSize,
       frameHeight: playerFrameSize
     });
   }
   if (!scene.textures.exists('player_jump')) {
-    scene.load.spritesheet('player_jump', 'assets/mc-jump.png', {
+    scene.load.spritesheet('player_jump', 'assets/player/mc-jump.png', {
       frameWidth: playerFrameSize,
       frameHeight: playerFrameSize
     });
