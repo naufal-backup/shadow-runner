@@ -216,6 +216,14 @@ export class GameScene extends Phaser.Scene {
 
     // 10. Launch Parallel UI Scene (Independent of Game World Camera Zoom)
     this.scene.launch('UIScene');
+
+    // Clean up parallel scenes on shutdown
+    this.events.once('shutdown', () => {
+      this.scene.stop('UIScene');
+      this.scene.stop('InventoryScene');
+      this.scene.stop('PauseScene');
+      this.scene.stop('GameOverScene');
+    });
   }
 
   public getPlayer(): Player {

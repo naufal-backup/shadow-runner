@@ -113,14 +113,18 @@ export class GameOverScene extends Phaser.Scene {
   }
 
   private retryGame(): void {
-    this.scene.stop();
+    this.scene.stop('InventoryScene');
     this.scene.stop('UIScene');
+    this.scene.stop('GameOverScene');
+    this.scene.stop('GameScene');
     this.scene.start('GameScene');
   }
 
   private goToMainMenu(): void {
-    this.scene.stop();
+    this.scene.stop('InventoryScene');
     this.scene.stop('UIScene');
+    this.scene.stop('GameOverScene');
+    this.scene.stop('GameScene');
     this.scene.start('MenuScene');
   }
 

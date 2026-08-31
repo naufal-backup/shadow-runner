@@ -88,15 +88,17 @@ export class PauseScene extends Phaser.Scene {
   }
 
   private restartGame(): void {
-    this.scene.stop();
+    this.scene.stop('InventoryScene');
     this.scene.stop('UIScene');
+    this.scene.stop('PauseScene');
     this.scene.stop('GameScene');
     this.scene.start('GameScene', { loadSavedGame: false });
   }
 
   private goToMainMenu(): void {
-    this.scene.stop();
+    this.scene.stop('InventoryScene');
     this.scene.stop('UIScene');
+    this.scene.stop('PauseScene');
     this.scene.stop('GameScene');
     this.scene.start('MenuScene');
   }
