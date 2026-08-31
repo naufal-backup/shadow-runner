@@ -14,7 +14,7 @@ export const PLAYER_CONFIG = {
   dodgeSpeed: 520,
   dodgeDurationMs: 220,
   dodgeCooldownMs: 900,
-  attackDurationMs: 650,
+  attackDurationMs: 400,
   attackCooldownMs: 80,
   comboWindowMs: 450,
   maxCombo: 3,

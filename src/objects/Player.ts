@@ -119,27 +119,27 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       frameRate: 1
     });
 
-    // Attack combo 1: 25 frames at 40fps = 625ms
+    // Attack combo 1: 25 frames at 70fps = 357ms
     anims.create({
       key: 'player_atk_1',
       frames: anims.generateFrameNumbers('player_attack', { start: 0, end: 24 }),
-      frameRate: 40,
+      frameRate: 70,
       repeat: 0
     });
 
-    // Attack combo 2: 25 frames at 48fps = 521ms
+    // Attack combo 2: 25 frames at 80fps = 313ms
     anims.create({
       key: 'player_atk_2',
       frames: anims.generateFrameNumbers('player_attack', { start: 0, end: 24 }),
-      frameRate: 48,
+      frameRate: 80,
       repeat: 0
     });
 
-    // Attack combo 3: 25 frames at 56fps = 446ms
+    // Attack combo 3: 25 frames at 90fps = 278ms
     anims.create({
       key: 'player_atk_3',
       frames: anims.generateFrameNumbers('player_attack', { start: 0, end: 24 }),
-      frameRate: 56,
+      frameRate: 90,
       repeat: 0
     });
 
