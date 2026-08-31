@@ -50,7 +50,7 @@ export class MovingSawHazard extends Phaser.Physics.Arcade.Sprite {
 
     const body = this.body as Phaser.Physics.Arcade.Body;
     body.allowGravity = false;
-    body.setCircle(13, 3, 3);
+    body.setCircle(8, 8, 8); // Pangkas radius lingkaran ke 8px (diameter 16px) terpusat
     this.setVelocityY(this.moveSpeedY * this.direction);
   }
 

@@ -578,7 +578,16 @@ export class GameScene extends Phaser.Scene {
       chunk.hazards.forEach((hazard) => {
         if (hazard instanceof MovingSawHazard) {
           hazard.updateHazard(delta);
-          if (Phaser.Geom.Intersects.RectangleToRectangle(hazard.getBounds(), this.player.getBounds())) {
+          const sawBody = hazard.body as Phaser.Physics.Arcade.Body;
+          const pBody = this.player.body as Phaser.Physics.Arcade.Body;
+          if (
+            sawBody &&
+            pBody &&
+            Phaser.Geom.Intersects.RectangleToRectangle(
+              new Phaser.Geom.Rectangle(sawBody.x, sawBody.y, sawBody.width, sawBody.height),
+              new Phaser.Geom.Rectangle(pBody.x, pBody.y, pBody.width, pBody.height)
+            )
+          ) {
             this.player.takeDamage(hazard.getDamage(), this.player.x > hazard.x ? 1 : -1);
           }
         }
@@ -602,8 +611,18 @@ export class GameScene extends Phaser.Scene {
       }
       proj.updateProjectile(delta);
 
-      if (proj.active && Phaser.Geom.Intersects.RectangleToRectangle(proj.getBounds(), this.player.getBounds())) {
-        const knockDir = proj.body ? (proj.body.velocity.x > 0 ? 1 : -1) : 1;
+      const projBody = proj.body as Phaser.Physics.Arcade.Body;
+      const pBody = this.player.body as Phaser.Physics.Arcade.Body;
+      if (
+        proj.active &&
+        projBody &&
+        pBody &&
+        Phaser.Geom.Intersects.RectangleToRectangle(
+          new Phaser.Geom.Rectangle(projBody.x, projBody.y, projBody.width, projBody.height),
+          new Phaser.Geom.Rectangle(pBody.x, pBody.y, pBody.width, pBody.height)
+        )
+      ) {
+        const knockDir = projBody.velocity.x > 0 ? 1 : -1;
         const hit = this.player.takeDamage(proj.getDamage(), knockDir);
         if (hit || !this.player.getIsInvulnerable()) {
           proj.destroy();
