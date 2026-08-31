@@ -42,6 +42,13 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this);
     scene.physics.add.existing(this);
 
+    // Release attack lock when animation finishes (not timer-based)
+    this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, (anim: Phaser.Animations.Animation) => {
+      if (anim.key === 'player_atk_1' || anim.key === 'player_atk_2' || anim.key === 'player_atk_3') {
+        this.isAttacking = false;
+      }
+    });
+
     // Scale down 256x256 sprite to fit game world (1:1 aspect ratio)
     this.setDisplaySize(96, 96);
 
@@ -112,27 +119,27 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       frameRate: 1
     });
 
-    // Attack combo 1: stance + overhead slash (frames 0-9)
+    // Attack combo 1: light jab — 5 frames at 10fps = 500ms
     anims.create({
       key: 'player_atk_1',
-      frames: anims.generateFrameNumbers('player_attack', { start: 0, end: 9 }),
-      frameRate: 16,
+      frames: anims.generateFrameNumbers('player_attack', { start: 0, end: 4 }),
+      frameRate: 10,
       repeat: 0
     });
 
-    // Attack combo 2: forward extension + sweep (frames 10-19)
+    // Attack combo 2: medium strike — 5 frames at 12fps = 417ms
     anims.create({
       key: 'player_atk_2',
-      frames: anims.generateFrameNumbers('player_attack', { start: 10, end: 19 }),
-      frameRate: 16,
+      frames: anims.generateFrameNumbers('player_attack', { start: 0, end: 4 }),
+      frameRate: 12,
       repeat: 0
     });
 
-    // Attack combo 3: return/finish (frames 20-24)
+    // Attack combo 3: heavy finisher — 5 frames at 15fps = 333ms
     anims.create({
       key: 'player_atk_3',
-      frames: anims.generateFrameNumbers('player_attack', { start: 20, end: 24 }),
-      frameRate: 16,
+      frames: anims.generateFrameNumbers('player_attack', { start: 0, end: 4 }),
+      frameRate: 15,
       repeat: 0
     });
 
@@ -369,7 +376,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       return;
     }
 
-    // 6. Handle Attack state
+    // 6. Handle Attack state — released by ANIMATION_COMPLETE event
+    // attackTimer is still decremented as a safety fallback
     if (this.isAttacking) {
       this.attackTimer -= delta;
       if (this.attackTimer <= 0) {
