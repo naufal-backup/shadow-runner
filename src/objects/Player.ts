@@ -96,19 +96,19 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       repeat: -1
     });
 
-    // Jump: 5 ascending frames from mc-jump (frames 0-4)
+    // Jump: 25 frames from mc-jump (full 0-24)
     anims.create({
       key: 'player_jump',
-      frames: anims.generateFrameNumbers('player_jump', { start: 0, end: 4 }),
-      frameRate: 12,
+      frames: anims.generateFrameNumbers('player_jump', { start: 0, end: 24 }),
+      frameRate: 40,
       repeat: 0
     });
 
-    // Fall: 5 descending frames from mc-jump (frames 5-9, skipping empty 10-24)
+    // Fall: 15 frames from mc-fall (separate spritesheet)
     anims.create({
       key: 'player_fall',
-      frames: anims.generateFrameNumbers('player_jump', { start: 5, end: 9 }),
-      frameRate: 10,
+      frames: anims.generateFrameNumbers('player_fall', { start: 0, end: 14 }),
+      frameRate: 15,
       repeat: 0
     });
 

@@ -41,6 +41,12 @@ export function createGameTextures(scene: Phaser.Scene): void {
       frameHeight: playerFrameSize
     });
   }
+  if (!scene.textures.exists('player_fall')) {
+    scene.load.spritesheet('player_fall', 'assets/player/mc-fall.png', {
+      frameWidth: playerFrameSize,
+      frameHeight: playerFrameSize
+    });
+  }
   if (!scene.textures.exists('player_wall_grab')) {
     scene.load.spritesheet('player_wall_grab', 'assets/player/mc-wall-grab.png', {
       frameWidth: playerFrameSize,
