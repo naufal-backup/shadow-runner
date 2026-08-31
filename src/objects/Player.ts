@@ -50,7 +50,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     });
 
     // Scale down 256x256 sprite to fit game world (1:1 aspect ratio)
-    this.setDisplaySize(96, 96);
+    this.applyScale(96);
 
     // Hitbox strictly covering character body within 256x256 source frame (X=95..145, Y=35..241)
     this.body!.setSize(50, 206);
@@ -58,6 +58,18 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.setCollideWorldBounds(true);
     this.initAnimations();
+  }
+
+  private updateBodyForDisplay(displaySize: number): void {
+    const scale = displaySize / 256;
+    const body = this.body as Phaser.Physics.Arcade.Body;
+    body.setSize(Math.round(80 * scale), Math.round(215 * scale));
+    body.setOffset(Math.round(73 * scale), Math.round(30 * scale));
+  }
+
+  private applyScale(size: number): void {
+    this.setDisplaySize(size, size);
+    this.updateBodyForDisplay(size);
   }
 
   private initAnimations(): void {
@@ -252,7 +264,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.invulnerable = true;
     this.invulnerableTimer = PLAYER_CONFIG.hitInvulnerableTimeMs;
 
-    this.setDisplaySize(96, 96);
+    this.applyScale(96);
     this.anims.play('player_hit', true);
     if (knockbackDir !== 0) {
       this.setVelocityX(knockbackDir * 160);
@@ -322,7 +334,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       this.isDownSmashing = true;
       this.setVelocityX(0);
       this.setVelocityY(720); // Fast dive slam
-      this.setDisplaySize(87, 87);
+      this.applyScale(87);
       this.anims.play('player_atk_3', true);
       this.emit('player_downsmash_start');
       return;
@@ -392,7 +404,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       this.dodgeDirection = this.flipX ? -1 : 1;
       arcadeBody.allowGravity = false;
       this.setAlpha(0.6);
-      this.setDisplaySize(130, 130);
+      this.applyScale(130);
       this.anims.play('player_dodge', true);
       this.emit('player_dodge');
       return;
@@ -425,7 +437,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       if (mode === 'melee') {
         this.comboCount = (this.comboCount % PLAYER_CONFIG.maxCombo) + 1;
         this.comboTimer = PLAYER_CONFIG.comboWindowMs;
-        this.setDisplaySize(87, 87);
+        this.applyScale(87);
         this.anims.play(`player_atk_${this.comboCount}`, true);
 
         this.emit('player_attack_melee', {
@@ -438,7 +450,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       } else {
         // Ranged shooting
         this.comboCount = 0;
-        this.setDisplaySize(87, 87);
+        this.applyScale(87);
         this.anims.play('player_atk_1', true);
 
         this.emit('player_attack_ranged', {
@@ -490,21 +502,21 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     // flipped isAttacking to false before the clip actually finished.
     if (!this.isAttacking && !this.isDownSmashing && !this.isAttackAnimPlaying()) {
       if (this.isWallSliding) {
-        this.setDisplaySize(96, 96);
+        this.applyScale(96);
         this.anims.play('player_wall_grab', true);
       } else if (!onFloor) {
         if (arcadeBody.velocity.y < 0) {
-          this.setDisplaySize(143, 143);
+          this.applyScale(143);
           this.anims.play('player_jump', true);
         } else {
-          this.setDisplaySize(125, 125);
+          this.applyScale(125);
           this.anims.play('player_fall', true);
         }
       } else if (arcadeBody.velocity.x !== 0) {
-        this.setDisplaySize(130, 130);
+        this.applyScale(130);
         this.anims.play('player_run', true);
       } else {
-        this.setDisplaySize(96, 96);
+        this.applyScale(96);
         this.anims.play('player_idle', true);
       }
     }
