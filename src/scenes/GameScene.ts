@@ -283,6 +283,14 @@ export class GameScene extends Phaser.Scene {
       this.enemies = this.enemies.filter((e) => e !== deadEnemy);
       this.enemyGroup.remove(deadEnemy);
 
+      // Pastikan chunk yang menyimpan referensi musuh ini juga membersihkannya
+      for (const [, chunk] of this.levelGen.getActiveChunks().entries()) {
+        const idx = chunk.enemies.indexOf(deadEnemy);
+        if (idx !== -1) {
+          chunk.enemies.splice(idx, 1);
+        }
+      }
+
       const enemyType = deadEnemy instanceof RangedEnemy ? 'ranged' : 'melee';
       const comboCount = this.player.getComboCount();
       const earned = this.scoreManager.recordKill(enemyType, comboCount);
@@ -594,12 +602,14 @@ export class GameScene extends Phaser.Scene {
       });
     }
 
-    // 6. Enemies update
+    // 6. Enemies update (bersihkan musuh yang sudah tidak aktif)
     for (let i = this.enemies.length - 1; i >= 0; i--) {
       const enemy = this.enemies[i];
-      if (enemy && enemy.active) {
-        enemy.updateEnemy(delta, this.player);
+      if (!enemy || !enemy.active) {
+        this.enemies.splice(i, 1);
+        continue;
       }
+      enemy.updateEnemy(delta, this.player);
     }
 
     // 7. Enemy Projectiles vs Player

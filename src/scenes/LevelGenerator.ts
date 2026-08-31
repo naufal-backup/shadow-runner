@@ -484,14 +484,33 @@ export class LevelGenerator {
   }
 
   private destroyChunk(chunk: LevelChunk): void {
-    chunk.groundObjects.forEach((obj) => obj.destroy());
-    chunk.oneWayPlatforms.forEach((obj) => obj.destroy());
+    chunk.groundObjects.forEach((obj) => {
+      this.groundGroup.remove(obj, true, true);
+      obj.destroy();
+    });
+    chunk.oneWayPlatforms.forEach((obj) => {
+      this.oneWayGroup.remove(obj, true, true);
+      obj.destroy();
+    });
     chunk.breakableBlocks.forEach((obj) => {
+      this.breakableGroup.remove(obj, true, true);
       if (obj.active) obj.destroy();
     });
-    chunk.hazards.forEach((obj) => obj.destroy());
-    chunk.enemies.forEach((enemy) => {
-      if (enemy.active) enemy.destroy();
+    chunk.hazards.forEach((obj) => {
+      this.hazardGroup.remove(obj, true, true);
+      obj.destroy();
     });
+    chunk.enemies.forEach((enemy) => {
+      if (enemy.active) {
+        enemy.removeAllListeners();
+        enemy.destroy();
+      }
+    });
+
+    chunk.groundObjects.length = 0;
+    chunk.oneWayPlatforms.length = 0;
+    chunk.breakableBlocks.length = 0;
+    chunk.hazards.length = 0;
+    chunk.enemies.length = 0;
   }
 }

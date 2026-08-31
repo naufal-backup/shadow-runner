@@ -25,8 +25,8 @@ export const PLAYER_CONFIG = {
 export const LEVEL_CONFIG = {
   chunkWidth: 700,
   initialSafeChunks: 2,
-  chunksAheadToGenerate: 3,
-  chunksBehindToCull: 2,
+  chunksAheadToGenerate: 2,
+  chunksBehindToCull: 1,
   pitDeathY: 1400, // Deep caverns allow descending down to Y=1000+
   baseDifficultyDistance: 1500, // Every 1500px traveled difficulty tier rises
   hazardDamage: {

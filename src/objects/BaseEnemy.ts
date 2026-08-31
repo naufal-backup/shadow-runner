@@ -137,6 +137,7 @@ export abstract class BaseEnemy extends Phaser.Physics.Arcade.Sprite {
   destroy(fromScene?: boolean): void {
     if (this.healthBarBg && this.healthBarBg.active) this.healthBarBg.destroy();
     if (this.healthBarFill && this.healthBarFill.active) this.healthBarFill.destroy();
+    this.removeAllListeners();
     super.destroy(fromScene);
   }
 }
