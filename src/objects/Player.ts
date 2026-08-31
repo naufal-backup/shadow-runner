@@ -492,15 +492,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
         if (arcadeBody.velocity.y < 0) {
           this.anims.play('player_jump', true);
         } else {
-          // At peak or falling: freeze on jump frame 9
-          if (this.anims.currentAnim?.key !== 'player_jump') {
-            this.anims.play('player_jump', true);
-          }
-          // Clamp to frame 9 and pause
-          if (this.anims.currentFrame && this.anims.currentFrame.index >= 9 && this.anims.isPlaying) {
-            this.setFrame(9);
-            this.anims.stop();
-          }
+          this.anims.play('player_fall', true);
         }
       } else if (arcadeBody.velocity.x !== 0) {
         this.setDisplaySize(96, 96);
