@@ -52,9 +52,9 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     // Scale down 256x256 sprite to fit game world (1:1 aspect ratio)
     this.setDisplaySize(96, 96);
 
-    // Hitbox aligned with visible character body in frame (offset in source 256x256 coordinates: X=80..165, Y=25..241)
-    this.body!.setSize(85, 215);
-    this.body!.setOffset(80, 26);
+    // Hitbox strictly covering character body within 256x256 source frame (X=95..145, Y=35..241)
+    this.body!.setSize(50, 206);
+    this.body!.setOffset(98, 35);
 
     this.setCollideWorldBounds(true);
     this.initAnimations();

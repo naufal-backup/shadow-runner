@@ -4,8 +4,8 @@ export const GROUND_Y = 400;
 
 export const PLAYER_CONFIG = {
   maxHp: 100,
-  width: 32,
-  height: 80,
+  width: 20,
+  height: 77,
   speed: 220,
   jumpVelocity: -420,
   jumpCutMultiplier: 0.45,
