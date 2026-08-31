@@ -119,27 +119,27 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       frameRate: 1
     });
 
-    // Attack combo 1: empty hand punch strike (frames 0..5) at 24fps = 250ms
+    // Attack combo 1: full 25-frame sequence at 30fps = 833ms
     anims.create({
       key: 'player_atk_1',
-      frames: anims.generateFrameNumbers('player_attack', { start: 0, end: 5 }),
-      frameRate: 24,
+      frames: anims.generateFrameNumbers('player_attack', { start: 0, end: 24 }),
+      frameRate: 30,
       repeat: 0
     });
 
-    // Attack combo 2: second punch combination (frames 0..5) at 26fps = 230ms
+    // Attack combo 2: full 25-frame sequence at 34fps = 735ms (faster)
     anims.create({
       key: 'player_atk_2',
-      frames: anims.generateFrameNumbers('player_attack', { start: 0, end: 5 }),
-      frameRate: 26,
+      frames: anims.generateFrameNumbers('player_attack', { start: 0, end: 24 }),
+      frameRate: 34,
       repeat: 0
     });
 
-    // Attack combo 3: heavy martial finisher (frames 0..5) at 28fps = 214ms
+    // Attack combo 3: full 25-frame sequence at 38fps = 658ms (fastest)
     anims.create({
       key: 'player_atk_3',
-      frames: anims.generateFrameNumbers('player_attack', { start: 0, end: 5 }),
-      frameRate: 28,
+      frames: anims.generateFrameNumbers('player_attack', { start: 0, end: 24 }),
+      frameRate: 38,
       repeat: 0
     });
 
