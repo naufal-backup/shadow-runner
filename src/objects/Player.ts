@@ -80,18 +80,18 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       }
     });
 
-    // Idle: 16 visible frames from mc-idle-trimmed (skip empty frames 16-19)
+    // Idle: 14 visible frames from mc-idle-trimmed (skip empty frame 14)
     anims.create({
       key: 'player_idle',
-      frames: anims.generateFrameNumbers('player_idle', { start: 0, end: 15 }),
+      frames: anims.generateFrameNumbers('player_idle', { start: 0, end: 13 }),
       frameRate: 6,
       repeat: -1
     });
 
-    // Run: 21 visible frames (10fps = 2.1s per cycle, all frames visible)
+    // Run: 14 visible frames (skip empty frame 14)
     anims.create({
       key: 'player_run',
-      frames: anims.generateFrameNumbers('player_run', { start: 0, end: 20 }),
+      frames: anims.generateFrameNumbers('player_run', { start: 0, end: 13 }),
       frameRate: 10,
       repeat: -1
     });
@@ -104,12 +104,20 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       repeat: 0
     });
 
-    // Fall: 5 descending frames from mc-jump (frames 15-19)
+    // Fall: 5 descending frames from mc-jump (frames 5-9, skipping empty 10-24)
     anims.create({
       key: 'player_fall',
-      frames: anims.generateFrameNumbers('player_jump', { start: 15, end: 19 }),
+      frames: anims.generateFrameNumbers('player_jump', { start: 5, end: 9 }),
       frameRate: 10,
       repeat: 0
+    });
+
+    // Wall grab: 5 frames from mc-wall-grab (frames 0-4)
+    anims.create({
+      key: 'player_wall_grab',
+      frames: anims.generateFrameNumbers('player_wall_grab', { start: 0, end: 4 }),
+      frameRate: 6,
+      repeat: -1
     });
 
     // Dodge: use a run frame for the dash (frame 10 = mid-stride)
@@ -477,7 +485,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     // flipped isAttacking to false before the clip actually finished.
     if (!this.isAttacking && !this.isDownSmashing && !this.isAttackAnimPlaying()) {
       if (this.isWallSliding) {
-        this.anims.play('player_fall', true);
+        this.anims.play('player_wall_grab', true);
       } else if (!onFloor) {
         if (arcadeBody.velocity.y < 0) {
           this.anims.play('player_jump', true);

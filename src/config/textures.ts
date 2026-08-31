@@ -41,6 +41,12 @@ export function createGameTextures(scene: Phaser.Scene): void {
       frameHeight: playerFrameSize
     });
   }
+  if (!scene.textures.exists('player_wall_grab')) {
+    scene.load.spritesheet('player_wall_grab', 'assets/player/mc-wall-grab.png', {
+      frameWidth: playerFrameSize,
+      frameHeight: playerFrameSize
+    });
+  }
 
   // Create a legacy 'player_sheet' alias pointing to idle for any code that references it
   if (!scene.textures.exists('player_sheet')) {
