@@ -119,27 +119,27 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       frameRate: 1
     });
 
-    // Attack combo 1: 6 frames (0, 1, 2, 3, 4, 5) at 24fps = 250ms
+    // Attack combo 1: full 6 frames (0, 1, 2, 3, 4, 5) at 16fps = 375ms
     anims.create({
       key: 'player_atk_1',
       frames: anims.generateFrameNumbers('player_attack', { start: 0, end: 5 }),
-      frameRate: 24,
+      frameRate: 16,
       repeat: 0
     });
 
-    // Attack combo 2: 6 frames (0, 1, 2, 3, 4, 5) at 24fps = 250ms
+    // Attack combo 2: full 6 frames (0, 1, 2, 3, 4, 5) at 18fps = 333ms
     anims.create({
       key: 'player_atk_2',
       frames: anims.generateFrameNumbers('player_attack', { start: 0, end: 5 }),
-      frameRate: 24,
+      frameRate: 18,
       repeat: 0
     });
 
-    // Attack combo 3: 6 frames (0, 1, 2, 3, 4, 5) at 24fps = 250ms
+    // Attack combo 3: full 6 frames (0, 1, 2, 3, 4, 5) at 20fps = 300ms
     anims.create({
       key: 'player_atk_3',
       frames: anims.generateFrameNumbers('player_attack', { start: 0, end: 5 }),
-      frameRate: 24,
+      frameRate: 20,
       repeat: 0
     });
 
@@ -185,6 +185,17 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
   public getComboCount(): number {
     return this.comboCount;
+  }
+
+  // True source of truth for "attack clip still visually playing" — used so
+  // no other state (run/idle/jump) can cut the swing off before its last frame,
+  // even if isAttacking was already cleared by the attackTimer safety fallback.
+  private isAttackAnimPlaying(): boolean {
+    const key = this.anims.currentAnim?.key;
+    return (
+      this.anims.isPlaying &&
+      (key === 'player_atk_1' || key === 'player_atk_2' || key === 'player_atk_3')
+    );
   }
 
   public getHp(): number {
@@ -386,7 +397,13 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     // Trigger Attack (Melee or Ranged depending on equipped weapon)
-    if (keys.attackJustDown && !this.isAttacking && !this.isDownSmashing && this.attackCooldownTimer <= 0) {
+    if (
+      keys.attackJustDown &&
+      !this.isAttacking &&
+      !this.isAttackAnimPlaying() &&
+      !this.isDownSmashing &&
+      this.attackCooldownTimer <= 0
+    ) {
       const mode = this.equippedWeapon.attackMode || 'melee';
       const cooldown = this.equippedWeapon.attackCooldownMs || PLAYER_CONFIG.attackCooldownMs;
 
@@ -420,8 +437,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       }
     }
 
-    // 7. Horizontal movement (unlocked if not in wall-jump impulse)
-    if (this.wallJumpTimer <= 0 && !this.isDownSmashing) {
+    // 7. Horizontal movement (unlocked if not in wall-jump impulse and not attacking)
+    if (this.wallJumpTimer <= 0 && !this.isDownSmashing && !this.isAttacking && !this.isAttackAnimPlaying()) {
       let moveDir = 0;
       if (keys.left) moveDir -= 1;
       if (keys.right) moveDir += 1;
@@ -432,6 +449,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       } else {
         this.setVelocityX(0);
       }
+    } else if (this.isAttacking || this.isAttackAnimPlaying()) {
+      this.setVelocityX(0);
     }
 
     // 8. Normal Jump & Variable jump height
@@ -453,7 +472,10 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     // 9. Animation selection
-    if (!this.isAttacking && !this.isDownSmashing) {
+    // Guarded by isAttackAnimPlaying() too, so a swing never gets cut short by
+    // run/idle/jump switching in — even if attackTimer's safety fallback already
+    // flipped isAttacking to false before the clip actually finished.
+    if (!this.isAttacking && !this.isDownSmashing && !this.isAttackAnimPlaying()) {
       if (this.isWallSliding) {
         this.anims.play('player_fall', true);
       } else if (!onFloor) {
