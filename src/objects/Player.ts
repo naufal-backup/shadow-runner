@@ -119,27 +119,27 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       frameRate: 1
     });
 
-    // Attack combo 1: ultra-snappy jab (frames 0, 4) — 2 frames at 36fps = 55ms
+    // Attack combo 1: 6 frames [0, 1, 2, 3, 4, 0] at 24fps = 250ms
     anims.create({
       key: 'player_atk_1',
-      frames: anims.generateFrameNumbers('player_attack', { frames: [0, 4] }),
-      frameRate: 36,
+      frames: anims.generateFrameNumbers('player_attack', { frames: [0, 1, 2, 3, 4, 0] }),
+      frameRate: 24,
       repeat: 0
     });
 
-    // Attack combo 2: ultra-snappy sweep (frames 1, 4) — 2 frames at 38fps = 52ms
+    // Attack combo 2: 6 frames [1, 2, 3, 4, 3, 0] at 24fps = 250ms
     anims.create({
       key: 'player_atk_2',
-      frames: anims.generateFrameNumbers('player_attack', { frames: [1, 4] }),
-      frameRate: 38,
+      frames: anims.generateFrameNumbers('player_attack', { frames: [1, 2, 3, 4, 3, 0] }),
+      frameRate: 24,
       repeat: 0
     });
 
-    // Attack combo 3: heavy slash (frames 2, 3, 4) — 3 frames at 45fps = 66ms
+    // Attack combo 3: 6 frames [0, 2, 3, 4, 4, 0] at 24fps = 250ms
     anims.create({
       key: 'player_atk_3',
-      frames: anims.generateFrameNumbers('player_attack', { frames: [2, 3, 4] }),
-      frameRate: 45,
+      frames: anims.generateFrameNumbers('player_attack', { frames: [0, 2, 3, 4, 4, 0] }),
+      frameRate: 24,
       repeat: 0
     });
 
