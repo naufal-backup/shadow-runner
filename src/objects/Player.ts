@@ -104,11 +104,11 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       repeat: 0
     });
 
-    // Fall: 6 frames from mc-fall
+    // Fall: 2 frames from mc-fall
     anims.create({
       key: 'player_fall',
-      frames: anims.generateFrameNumbers('player_fall', { start: 0, end: 5 }),
-      frameRate: 12,
+      frames: anims.generateFrameNumbers('player_fall', { start: 0, end: 1 }),
+      frameRate: 8,
       repeat: 0
     });
 
@@ -485,20 +485,16 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     // flipped isAttacking to false before the clip actually finished.
     if (!this.isAttacking && !this.isDownSmashing && !this.isAttackAnimPlaying()) {
       if (this.isWallSliding) {
-        this.setDisplaySize(144, 144);
         this.anims.play('player_wall_grab', true);
       } else if (!onFloor) {
-        this.setDisplaySize(96, 96);
         if (arcadeBody.velocity.y < 0) {
           this.anims.play('player_jump', true);
         } else {
           this.anims.play('player_fall', true);
         }
       } else if (arcadeBody.velocity.x !== 0) {
-        this.setDisplaySize(96, 96);
         this.anims.play('player_run', true);
       } else {
-        this.setDisplaySize(96, 96);
         this.anims.play('player_idle', true);
       }
     }
